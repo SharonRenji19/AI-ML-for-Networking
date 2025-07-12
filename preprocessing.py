@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 import zipfile
 import os
 
-def load_and_preprocess_data(arff_file_path="/home/sriya/Downloads/ai_network/network_analysis/KDDTest+.arff", test_size=0.2, random_state=42):
+def load_and_preprocess_data(arff_file_path="/home/chira/Downloads/ai_network/network_analysis/KDDTest+.arff", test_size=0.2, random_state=42):
     """
     Loads data from an ARFF file, preprocesses it, and splits it into training and testing sets.
 
