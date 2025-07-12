@@ -1,128 +1,128 @@
-# AI‑ML‑Driven Network Security
+# Network Intelligence using AI & ML
 
-> **Smarter traffic analysis & threat detection for encrypted, high-throughput networks.**  
-> • **Random Forest**-based flow classification • **Isolation Forest** anomaly discovery • **Privacy-first feature handling**
+> **Modern traffic insight & encrypted anomaly detection using Machine Learning**  
+> • **Random Forest** for flow categorization • **Isolation Forest** for unknown threat discovery • **Privacy-aware feature engineering**
 
 ---
 
-## Table of Contents
+## Contents
 
-1. [Overview](#overview)  
-2. [Core Highlights](#core-highlights)  
-3. [Setup Instructions](#setup-instructions)  
+1. [Introduction](#introduction)  
+2. [Highlights](#highlights)  
+3. [Setup Guide](#setup-guide)  
 4. [Getting Started](#getting-started)  
-5. [Project Layout](#project-layout)  
-6. [How to Use](#how-to-use)  
-7. [Example Results](#example-results)  
-8. [Future Plans](#future-plans)  
-9. [How to Contribute](#how-to-contribute)  
-10. [License](#license)  
+5. [Directory Layout](#directory-layout)  
+6. [Usage Instructions](#usage-instructions)  
+7. [Performance Results](#performance-results)  
+8. [Planned Enhancements](#planned-enhancements)  
+9. [Contributions](#contributions)  
+10. [Legal Info](#legal-info)  
 
 ---
 
-## Overview
+## Introduction
 
-`AI‑ML‑Driven Network Security` is a Python-based solution tailored to the challenges of traffic visibility in encrypted and IoT-rich environments.  
-It leverages ensemble ML methods and streamlined preprocessing to:
+`Network Intelligence using AI & ML` offers a lightweight Python toolkit designed to analyze encrypted or complex network traffic.  
+Utilizing classical ensemble techniques and fast preprocessing, it enables:
 
-- **Identify** network sessions as either *legitimate* or *malicious*, supporting multi-class output.  
-- **Spot** unseen (zero-day) anomalies with minimal delay.  
-- **Protect privacy** by locally summarizing sensitive data before export.
+- **Flow labeling** as either *normal* or *attack* with multi-label support.  
+- **Zero-day threat identification** in real-time scenarios.  
+- **Data confidentiality** by transforming raw packets into anonymized features locally.
 
-The toolkit delivers a **Macro‑F1 score ~0.92** on NSL‑KDD and handles ~10k flows/sec on standard laptop hardware.
-
----
-
-## Core Highlights
-
-- 🔍 **Flow Classification** — Optimized Random Forest (up to 100 trees, depth capped at 10).  
-- 🚨 **Anomaly Detection** — Isolation Forest with contamination rate ≤1%.  
-- 🛠️ **Modular & Reproducible** — Easily switch models or datasets via config flags.  
-- ⚡ **Low Resource Usage** — Operates efficiently within 2 GB RAM; no GPU needed.  
-- 🔐 **Data Privacy** — Optional local aggregation to avoid raw packet leakage.
+The solution achieves a **Macro F1 score of ~0.92** on NSL‑KDD while managing approximately 10,000 flows per second on a standard CPU.
 
 ---
 
-## Setup Instructions
+## Highlights
+
+- 🎯 **Supervised Classification** — Optimized Random Forest (50–100 estimators, max depth of 10).  
+- ⚠️ **Outlier Detection** — Unsupervised Isolation Forest tuned with ≤1% contamination.  
+- 🧩 **Adaptable Framework** — Easily reconfigurable for different models or datasets.  
+- 💡 **Lightweight Execution** — Requires less than 2 GB RAM; works without GPUs.  
+- 🔐 **Secure Design** — On-site packet abstraction ensures sensitive data never leaves the origin.
+
+---
+
+## Setup Guide
 
 ```bash
-# 1. Clone the repository
+# Clone the project
 $ git clone https://github.com/sriya-vadla/AI-ML-for-Networking.git
 $ cd AI-ML-for-Networking
 
-# 2. Set up a virtual environment
-$ python -m venv venv && source venv/bin/activate  # For Windows: venv\Scripts\activate
+# Activate a virtual environment
+$ python -m venv venv && source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# 3. Install Python dependencies
+# Install the required packages
 $ pip install -r requirements.txt
 ```
 
-> **Dataset** — NSL‑KDD will auto-download on first use.  
-> For custom CSV or PCAP flows, refer to [`docs/DATASET.md`](docs/DATASET.md).
+> **Note**: NSL-KDD data is downloaded automatically on the initial run.  
+> To integrate your PCAP or CSV data, consult [`docs/DATASET.md`](docs/DATASET.md).
 
 ---
 
 ## Getting Started
 
-Run the training and prediction steps:
+Use the following commands to train and test the pipeline:
 
 ```bash
-# Build and evaluate models
+# Train models and assess performance
 $ python run_analysis.py --mode train
 
-# Classify flows using a CSV input
+# Make predictions on new data
 $ python run_analysis.py --mode predict --input sample/flows.csv --output predictions.csv
 ```
 
 ---
 
-## Project Layout
+## Directory Layout
 
 ```text
 AI-ML-for-Networking/
 │
-├── preprocessing.py       # Data transformation & feature creation
-├── models.py              # ML pipeline definitions and tuning
-├── run_analysis.py        # Main controller script
+├── preprocessing.py       # Handles input cleanup and feature setup
+├── models.py              # ML logic and hyperparameter configurations
+├── run_analysis.py        # Main entry point with CLI
 │
-├── sample/                # Demo configs & sample inputs
-├── tests/                 # Test cases for validation
-├── requirements.txt       # Dependency list
-└── docs/                  # Documentation files
-    └── DATASET.md         # Custom dataset usage guide
+├── sample/                # Sample data and configuration files
+├── tests/                 # Testing scripts
+├── requirements.txt       # List of Python packages
+└── docs/                  # Additional help and guides
+    └── DATASET.md         # Instructions for using custom data
 ```
 
 ---
 
-## How to Use
+## Usage Instructions
 
-Commonly used CLI flags:
+Available CLI flags:
 
 ```bash
 --mode {train,predict,benchmark}
---input  path/to/flows.csv      # required for predict/benchmark
---output path/to/out.csv        # default: predictions.csv
---model_dir models/             # directory for saved models
+--input  path/to/flows.csv      # mandatory for predict/benchmark modes
+--output path/to/out.csv        # default is predictions.csv
+--model_dir models/             # model storage directory
 --log_level {info,debug}
 ```
 
-For a full list, run:
+To see all options, run:
 
 ```bash
 python run_analysis.py --help
 ```
 
-### Real-Time Capture (Beta)
+### Real-Time Monitoring (Beta)
 
 ```bash
 $ python run_analysis.py --mode live --iface eth0
 ```
 
-> Requires `scapy` or `pyshark`. Real-time packets are processed into flow summaries.
+> Requires `scapy` or `pyshark`. Real-time packets are translated into flow summaries before predictions.
 
 ---
 
-## Example Results
+## Performance Results
 
 ```
                precision    recall  f1-score   support
@@ -132,37 +132,33 @@ $ python run_analysis.py --mode live --iface eth0
    Probe_PortScan   0.89      0.88      0.88     1337
           …
 
-    Macro‑F1 ≈ 0.92
+    Macro-F1 ≈ 0.92
 ```
 
-A detailed HTML evaluation report is saved to `reports/latest/` after each training run.
+A comprehensive performance report (including confusion matrix) is saved in `reports/latest/`.
 
 ---
 
-## Future Plans
+## Planned Enhancements
 
-Planned improvements:
+Some upcoming goals:
 
-- 🧠 Incorporation of deep learning (e.g., autoencoders or transformers)  
-- 🧪 Broader dataset benchmarks (CICIDS, UNSW-NB15)  
-- 📦 Dockerized deployment support  
-- 📉 Integration with Grafana for real-time monitoring
-
----
-
-## How to Contribute
-
-1. **Fork** this repository and create a new branch (`git checkout -b feat/my-feature`).  
-2. **Commit** your changes with meaningful messages.  
-3. **Push** your branch (`git push origin feat/my-feature`).  
-4. **Submit a PR** explaining your changes and purpose.
-
-Run `pytest` locally to validate changes.  
-Refer to [`CONTRIBUTING.md`](CONTRIBUTING.md) for coding and CI rules.
+- 🔬 Add neural network-based approaches (Autoencoders, Transformers)  
+- 📊 Include additional datasets (e.g., CICIDS, UNSW-NB15)  
+- 🐳 Create Docker container for deployment  
+- 📈 Real-time dashboard with Grafana integration
 
 ---
 
-## License
+## Contributions
+Want to contribute?
 
-This project is licensed under the **MIT License**.  
-See [`LICENSE`](LICENSE) for details.
+1. **Fork** the repository and create a branch (`git checkout -b feature/your-feature`).  
+2. **Commit** changes (`git commit -m "feature: description"`).  
+3. **Push** to GitHub (`git push origin feature/your-feature`).  
+4. **Open a Pull Request** with a short explanation.
+
+## Legal Info
+
+This project is covered under the **MIT License**.  
+Read [`LICENSE`](LICENSE) for the full license text.
